@@ -2,17 +2,24 @@ package com.raa.omnitext;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainApp extends Application {
+    Scene mainScreen, pasteScreen;
     @Override
     public void start(Stage stage) throws IOException {
-        Scene scene = new Scene(new StackPane(), 320, 240);
         stage.setTitle("OmniText");
-        stage.setScene(scene);
+        stage.getIcons().add(OmniUI.assetImage("512_logo.png"));
+        stage.setMinHeight(500);
+        stage.setMinWidth(700);
+
+        mainScreen = OmniUI.drawMainScreen();
+        pasteScreen = OmniUI.drawPasteScreen();
+
+        stage.setScene(mainScreen);
+
         stage.show();
     }
 
