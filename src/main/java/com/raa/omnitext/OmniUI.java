@@ -24,7 +24,6 @@ public class OmniUI {
 
         VBox mainArea = new VBox();
         mainArea.setPadding(new Insets(20, 0, 20, 0));
-        mainArea.setStyle("-fx-background-color: red;");
         mainArea.setPrefHeight(500);
         mainArea.setAlignment(Pos.CENTER);
         VBox.setVgrow(mainArea, Priority.ALWAYS);
@@ -32,7 +31,6 @@ public class OmniUI {
         Label title = new Label("Your Pastes");
 
         ScrollPane scrollArea = new ScrollPane();
-        scrollArea.setStyle("-fx-background-color: green;");
         scrollArea.setMaxWidth(550);
         scrollArea.setPadding(new Insets(4, 4, 4, 4));
 
@@ -91,7 +89,6 @@ public class OmniUI {
     private static VBox displayPastes(VBox div){
         String[] list = OmniEngine.getPasteList();
         div.setAlignment(Pos.CENTER);
-        div.setStyle("-fx-background-color: yellow;");
 
         for(String item : list){
             Button paste = new Button();
