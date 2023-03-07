@@ -2,16 +2,83 @@
     -fx-pref-height: 54;
     -fx-padding: 8;
     -fx-alignment: CENTER;
+    -fx-background-color: -medium;
 }
 
-#mainArea {
-    -fx-padding: 20 0 20 0;
-    -fx-pref-height: 500;
-    -fx-alignment: CENTER;
+#logotext {
+    -fx-font-size: 32px;
+    -fx-font-weight: bolder;
+    -fx-font-family: "Segoe UI";
 }
 
 #navButtons {
     -fx-alignment: CENTER;
 }
 
+#navButtons .button {
+    -fx-background-color: -medium;
+    -fx-border-color: transparent;
+    -fx-font-weight: bolder;
+    -fx-font-size: 20px;
+    -fx-text-fill: -lighter;
+}
 
+#themeChangeButton {
+    -fx-background-color: -dark;
+    -fx-background-radius: 50%;
+    -fx-padding: 8px;
+}
+
+#profileButton {
+    -fx-background-color: -darker;
+    -fx-background-radius: 16px;
+}
+/* end of top bar */
+
+/* main area */
+#mainArea {
+    -fx-padding: 20 0 20 0;
+    -fx-pref-height: 500;
+    -fx-alignment: CENTER;
+    -fx-background-color: -light;
+}
+
+#mainArea .label {
+    -fx-font-size: 28px;
+}
+
+#scrollArea {
+    -fx-background-color: -light;
+    -fx-border-width: 0;
+    -fx-padding: 4px;
+    -fx-max-width: 530;
+}
+.scroll-pane > .viewport, .scroll-pane .corner{
+    -fx-background-color: -light;
+}
+
+#paste {
+    -fx-background-color: -medium;
+    -fx-pref-width: 500;
+    -fx-max-width: 500;
+    -fx-pref-height: 64;
+    -fx-max-height: 64;
+    -fx-alignment: CENTER;
+}
+
+#paste .label {
+    -fx-font-size: 24px;
+}
+
+#copyLinkButton, #deleteButton {
+    -fx-pref-height: 32;
+    -fx-pref-width: 32;
+    padding: 12px;
+    -fx-background-radius: 16px;
+}
+#copyLinkButton {
+    -fx-background-color: -lighter;
+}
+#deleteButton {
+    -fx-background-color: -rbg;
+}

@@ -35,8 +35,7 @@ public class OmniUI {
         title = new Label("Your Pastes");
 
         scrollArea = new ScrollPane();
-        scrollArea.setMaxWidth(530);
-        scrollArea.setPadding(new Insets(4, 4, 4, 4));
+        scrollArea.setId("scrollArea");
 
         pasteListDiv = new VBox(12);
         pasteListDiv = displayPastes(pasteListDiv);
@@ -46,7 +45,7 @@ public class OmniUI {
 
         mainLayout.getChildren().addAll(topBar, mainArea);
         Scene mainScene = new Scene(mainLayout);
-        mainScene.getStylesheets().addAll("app.css");
+        mainScene.getStylesheets().addAll("lightmode.css", "app.css");
         return mainScene;
     }
 
@@ -99,11 +98,6 @@ public class OmniUI {
         for(String item : list){
             Button paste = new Button();
             paste.setId("paste");
-            paste.setPrefWidth(500);
-            paste.setMaxWidth(500);
-            paste.setPrefHeight(64);
-            paste.setMaxHeight(64);
-            paste.setAlignment(Pos.CENTER);
 
             buttonContents = new HBox(4);
             buttonContents.setAlignment(Pos.CENTER);
@@ -114,20 +108,16 @@ public class OmniUI {
 
             Button copyLinkButton = new Button();
             copyLinkButton.setId("copyLinkButton");
-            copyLinkButton.setPrefHeight(48);
-            copyLinkButton.setPrefWidth(48);
             ImageView copyLinkIcon = new ImageView(assetImage("128_link.png"));
             copyLinkIcon.setPreserveRatio(true);
-            copyLinkIcon.setFitHeight(36);
+            copyLinkIcon.setFitHeight(28);
             copyLinkButton.setGraphic(copyLinkIcon);
 
             Button deleteButton = new Button();
             deleteButton.setId("deleteButton");
-            deleteButton.setPrefHeight(48);
-            deleteButton.setPrefWidth(48);
             ImageView deletePasteIcon = new ImageView(assetImage("128_delete_paste.png"));
             deletePasteIcon.setPreserveRatio(true);
-            deletePasteIcon.setFitHeight(36);
+            deletePasteIcon.setFitHeight(28);
             deleteButton.setGraphic(deletePasteIcon);
 
             buttonContents.getChildren().addAll(title, spacer, copyLinkButton, deleteButton);
