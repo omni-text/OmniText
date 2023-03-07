@@ -1,0 +1,16 @@
+.root {
+    --lighter: #c5efce;
+    --light: #b0d2b4;
+    --medium: #5a9e61;
+    --dark: #2a5828;
+    --darker: #083209;
+
+    /*Red Shades*/
+    --rbg: #e3a4a4;
+    --rfg: #7a0000;
+
+    /*Grayscale*/
+    --white: #ffffff;
+    --textbox: #083209;
+    --black: #000000;
+}

@@ -2,8 +2,6 @@ package com.raa.omnitext;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;

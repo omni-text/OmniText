@@ -6,35 +6,39 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Rectangle;
 
 public class OmniUI {
     public static Image assetImage(String filename){
         return new Image(OmniUI.class.getResource("/icons/" + filename).toString());
     }
-    public static Scene drawMainScreen(){
-        VBox mainLayout = new VBox();
 
-        HBox topBar = new HBox(8);
+    static VBox mainLayout, mainArea, pasteListDiv;
+    static HBox topBar, navButtons, buttonContents;
+    static ScrollPane scrollArea;
+    static Label title, logotext;
+    static Button homeButton, aboutButton, contactButton, themeChangeButton, profileButton;
+
+    public static Scene drawMainScreen(){
+        mainLayout = new VBox();
+
+        topBar = new HBox(8);
+        topBar.setId("topBar");
         topBar = drawTopBar(topBar);
 
-        VBox mainArea = new VBox();
-        mainArea.setPadding(new Insets(20, 0, 20, 0));
-        mainArea.setPrefHeight(500);
-        mainArea.setAlignment(Pos.CENTER);
+        mainArea = new VBox();
+        mainArea.setId("mainArea");
         VBox.setVgrow(mainArea, Priority.ALWAYS);
 
-        Label title = new Label("Your Pastes");
+        title = new Label("Your Pastes");
 
-        ScrollPane scrollArea = new ScrollPane();
+        scrollArea = new ScrollPane();
         scrollArea.setMaxWidth(530);
         scrollArea.setPadding(new Insets(4, 4, 4, 4));
 
-        VBox pasteListDiv = new VBox(12);
+        pasteListDiv = new VBox(12);
         pasteListDiv = displayPastes(pasteListDiv);
         scrollArea.setContent(pasteListDiv);
 
@@ -42,14 +46,12 @@ public class OmniUI {
 
         mainLayout.getChildren().addAll(topBar, mainArea);
         Scene mainScene = new Scene(mainLayout);
+        mainScene.getStylesheets().addAll("app.css");
         return mainScene;
     }
 
     private static HBox drawTopBar(HBox topbar){
-        topbar.setPrefHeight(54);
         HBox.setHgrow(topbar, Priority.ALWAYS);
-        topbar.setPadding(new Insets(8, 8, 8, 8));
-        topbar.setAlignment(Pos.CENTER);
 
         Region spacer1 = new Region();
         Region spacer2 = new Region();
@@ -61,22 +63,26 @@ public class OmniUI {
         logo.setPreserveRatio(true);
         logo.setFitHeight(48);
 
-        Label logotext = new Label("OmniText");
+        logotext = new Label("OmniText");
+        logotext.setId("logotext");
 
-        HBox navButtons = new HBox(12);
-        navButtons.setAlignment(Pos.CENTER);
-        Button homeButton = new Button("HOME");
-        Button aboutButton = new Button("ABOUT");
-        Button contactButton = new Button("CONTACT");
+        navButtons = new HBox(12);
+        navButtons.setId("navButtons");
+
+        homeButton = new Button("HOME");
+        aboutButton = new Button("ABOUT");
+        contactButton = new Button("CONTACT");
         navButtons.getChildren().addAll(homeButton, aboutButton, contactButton);
 
-        Button themeChangeButton = new Button();
+        themeChangeButton = new Button();
+        themeChangeButton.setId("themeChangeButton");
         ImageView themeIcon = new ImageView(assetImage("128_switch_darkmode.png"));
         themeIcon.setPreserveRatio(true);
         themeIcon.setFitHeight(24);
         themeChangeButton.setGraphic(themeIcon);
 
-        Button profileButton = new Button();
+        profileButton = new Button();
+        profileButton.setId("profileButton");
         ImageView profileIcon = new ImageView(assetImage("128_profile.png"));
         profileIcon.setPreserveRatio(true);
         profileIcon.setFitHeight(40);
@@ -92,13 +98,14 @@ public class OmniUI {
 
         for(String item : list){
             Button paste = new Button();
+            paste.setId("paste");
             paste.setPrefWidth(500);
             paste.setMaxWidth(500);
             paste.setPrefHeight(64);
             paste.setMaxHeight(64);
             paste.setAlignment(Pos.CENTER);
 
-            HBox buttonContents = new HBox(4);
+            buttonContents = new HBox(4);
             buttonContents.setAlignment(Pos.CENTER);
 
             Label title = new Label(item);
@@ -106,6 +113,7 @@ public class OmniUI {
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
             Button copyLinkButton = new Button();
+            copyLinkButton.setId("copyLinkButton");
             copyLinkButton.setPrefHeight(48);
             copyLinkButton.setPrefWidth(48);
             ImageView copyLinkIcon = new ImageView(assetImage("128_link.png"));
@@ -114,6 +122,7 @@ public class OmniUI {
             copyLinkButton.setGraphic(copyLinkIcon);
 
             Button deleteButton = new Button();
+            deleteButton.setId("deleteButton");
             deleteButton.setPrefHeight(48);
             deleteButton.setPrefWidth(48);
             ImageView deletePasteIcon = new ImageView(assetImage("128_delete_paste.png"));
@@ -129,6 +138,7 @@ public class OmniUI {
 
         return div;
     }
+
     public static Scene drawPasteScreen(){
         Scene pasteScreen = new Scene(new VBox());
         return pasteScreen;

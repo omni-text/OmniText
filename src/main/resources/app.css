@@ -1,0 +1,17 @@
+#topBar {
+    -fx-pref-height: 54;
+    -fx-padding: 8;
+    -fx-alignment: CENTER;
+}
+
+#mainArea {
+    -fx-padding: 20 0 20 0;
+    -fx-pref-height: 500;
+    -fx-alignment: CENTER;
+}
+
+#navButtons {
+    -fx-alignment: CENTER;
+}
+
+
