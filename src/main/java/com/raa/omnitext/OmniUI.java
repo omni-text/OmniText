@@ -31,7 +31,7 @@ public class OmniUI {
         Label title = new Label("Your Pastes");
 
         ScrollPane scrollArea = new ScrollPane();
-        scrollArea.setMaxWidth(550);
+        scrollArea.setMaxWidth(530);
         scrollArea.setPadding(new Insets(4, 4, 4, 4));
 
         VBox pasteListDiv = new VBox(12);
