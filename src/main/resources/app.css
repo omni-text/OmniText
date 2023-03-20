@@ -59,6 +59,7 @@
 
 #paste {
     -fx-background-color: -medium;
+    -fx-background-radius: 25px;
     -fx-pref-width: 500;
     -fx-max-width: 500;
     -fx-pref-height: 64;
