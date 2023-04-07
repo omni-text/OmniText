@@ -15,6 +15,7 @@ public class OmniUI {
         return new Image(OmniUI.class.getResource("/icons/" + filename).toString());
     }
 
+    static Scene mainScene;
     static VBox mainLayout, mainArea, pasteListDiv;
     static HBox topBar, navButtons, buttonContents;
     static ScrollPane scrollArea;
@@ -44,8 +45,8 @@ public class OmniUI {
         mainArea.getChildren().addAll(title, scrollArea);
 
         mainLayout.getChildren().addAll(topBar, mainArea);
-        Scene mainScene = new Scene(mainLayout);
-        mainScene.getStylesheets().addAll("lightmode.css", "app.css");
+        mainScene = new Scene(mainLayout);
+        OmniColors.setTheme();
         return mainScene;
     }
 
@@ -79,6 +80,7 @@ public class OmniUI {
         themeIcon.setPreserveRatio(true);
         themeIcon.setFitHeight(24);
         themeChangeButton.setGraphic(themeIcon);
+        themeChangeButton.setOnAction(e -> OmniColors.switchTheme());
 
         profileButton = new Button();
         profileButton.setId("profileButton");

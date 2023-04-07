@@ -1,3 +1,7 @@
+* {
+    -fx-text-fill: -text;
+}
+
 #topBar {
     -fx-pref-height: 54;
     -fx-padding: 8;

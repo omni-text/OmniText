@@ -1,9 +1,9 @@
 * {
     -lighter: #c5efce;
-    -light: #b0d2b4;
-    -medium: #5a9e61;
-    -dark: #2a5828;
-    -darker: #083209;
+    -light: #2a5828;
+    -medium: #083209;
+    -dark: #b0d2b4;
+    -darker: #5a9e61;
 
     /*Red Shades*/
     -rbg: #e3a4a4;
@@ -11,7 +11,7 @@
 
     /*Grayscale*/
     -white: #ffffff;
-    -textbox: #ffffff;
+    -textbox: #282828;
     -black: #000000;
-    -text: -black;
+    -text: -white;
 }
