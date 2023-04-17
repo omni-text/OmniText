@@ -1,10 +1,40 @@
 package com.raa.omnitext;
 
-public class OmniEngine {
-    private static String[] pasteList = {"Paste1", "Paste2", "Important", "Hello", "Paste1", "Paste2", "Important", "Hello",
-            "Paste1", "Paste2", "Important","Paste1", "Paste2", "Important"};
+import java.util.ArrayList;
 
-    public static String[] getPasteList(){
+public class OmniEngine {
+    private static ArrayList<String> pasteList = new ArrayList<>();
+    private static ArrayList<String> pasteContentList = new ArrayList<>(){};
+
+    public static ArrayList<String> getPasteList(){
         return pasteList;
+    }
+    public static ArrayList<String> getPasteContentList() {
+        return pasteContentList;
+    }
+
+    public static void addPaste(String title, String content){
+        if(!pasteList.contains(title)) {
+            pasteList.add(title);
+            pasteContentList.add(content);
+        }
+    }
+    public static void editPaste(int index, String title, String content){
+        deletePaste(index);
+        pasteList.add(index, title);
+        pasteContentList.add(index, content);
+    }
+    public static void deletePaste(int index){
+        pasteList.remove(index);
+        pasteContentList.remove(index);
+    }
+
+    public static String getPasteTitle(int index){
+        if(pasteList.size()-1 >= index) return pasteList.get(index);
+        return "";
+    }
+    public static String getPasteContent(int index){
+        if(pasteContentList.size()-1 >= index) return pasteContentList.get(index);
+        return "";
     }
 }

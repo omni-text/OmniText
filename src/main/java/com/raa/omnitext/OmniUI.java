@@ -1,14 +1,14 @@
 package com.raa.omnitext;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class OmniUI {
     public static Image assetImage(String filename){
@@ -19,12 +19,19 @@ public class OmniUI {
     static VBox mainLayout, mainArea, pasteListDiv, pastePage;
     static HBox topBar, navButtons, buttonContents;
     static ScrollPane scrollArea;
-    static Label title, logotext, hello;
-    static Button homeButton, aboutButton, contactButton, themeChangeButton, profileButton;
-    static ImageView logo;
+    static Label title, logotext;
+    static Button homeButton, aboutButton, contactButton, themeChangeButton, profileButton, createPasteButton;
+    static Button saveButton, deleteButton, copyTextButton, linkButton;
+    static ImageView logo, linkLogo;
+    static TextField titleField;
+    static TextArea contentArea;
+
+    static boolean editMode = false;
+    static int editIndex = -1;
 
     public static Scene drawMainScreen(){
         mainLayout = new VBox();
+        mainLayout.setAlignment(Pos.CENTER);
 
         topBar = new HBox(8);
         topBar.setId("topBar");
@@ -40,15 +47,19 @@ public class OmniUI {
         scrollArea.setId("scrollArea");
 
         pasteListDiv = new VBox(12);
-        pasteListDiv = displayPastes(pasteListDiv);
+        displayPastes();
         scrollArea.setContent(pasteListDiv);
 
         mainArea.getChildren().addAll(title, scrollArea);
 
-        //paste page setup
+        createPasteButton = new Button("Create New");
+        createPasteButton.setId("createPasteButton");
+        createPasteButton.setOnAction(e -> openPaste());
+
+//        paste page setup
         pastePage = drawPastePage();
 
-        mainLayout.getChildren().addAll(topBar, mainArea);
+        mainLayout.getChildren().addAll(topBar, mainArea, createPasteButton);
         mainScene = new Scene(mainLayout);
         OmniColors.setTheme();
 
@@ -77,7 +88,6 @@ public class OmniUI {
         homeButton = new Button("HOME");
         homeButton.setOnAction(e -> openHomePage());
         aboutButton = new Button("ABOUT");
-        aboutButton.setOnAction(e -> openPaste());
         contactButton = new Button("CONTACT");
         navButtons.getChildren().addAll(homeButton, aboutButton, contactButton);
 
@@ -102,22 +112,23 @@ public class OmniUI {
 
     private static void refreshPastes(){
         pasteListDiv.getChildren().clear();
-        pasteListDiv = displayPastes(pasteListDiv);
+        displayPastes();
         System.out.println("refreshed");
     }
 
-    private static VBox displayPastes(VBox div){
-        String[] list = OmniEngine.getPasteList();
-        div.setAlignment(Pos.CENTER);
+    private static void displayPastes(){
+        ArrayList<String> list = OmniEngine.getPasteList();
+        ArrayList<String> contentList = OmniEngine.getPasteContentList();
+        pasteListDiv.setAlignment(Pos.CENTER);
 
-        for(String item : list){
+        for(int i=0; i<list.size(); i++){
             Button paste = new Button();
             paste.setId("paste");
 
             buttonContents = new HBox(4);
             buttonContents.setAlignment(Pos.CENTER);
 
-            Label title = new Label(item);
+            Label title = new Label(list.get(i));
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
@@ -137,11 +148,31 @@ public class OmniUI {
 
             buttonContents.getChildren().addAll(title, spacer, copyLinkButton, deleteButton);
             paste.setGraphic(buttonContents);
+            final int k = i;
+            paste.setOnAction(e -> {
+                openPaste(k);
+                editMode = true;
+                editIndex = k;
+            });
+            deleteButton.setOnAction(e -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete confirmation");
+                alert.setHeaderText("Delete Paste?");
+                alert.setContentText("Are you sure you want to delete this paste?\n"+OmniEngine.getPasteTitle(k)+"\n"+OmniEngine.getPasteContent(k));
 
-            div.getChildren().add(paste);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    OmniEngine.deletePaste(k);
+                    alert.close();
+                }
+                else {
+                    alert.close();
+                }
+                openHomePage();
+            });
+
+            pasteListDiv.getChildren().add(paste);
         }
-
-        return div;
     }
 
     private static VBox drawPastePage(){
@@ -149,27 +180,87 @@ public class OmniUI {
         pastePage.setId("pastePage");
         VBox.setVgrow(pastePage, Priority.ALWAYS);
 
-        hello = new Label("HEHHHEHEHEHE");
-        hello.setId("logotect");
+        HBox titleDiv = new HBox(8);
+        Label titleLabel = new Label("Paste Title: ");
+        titleField = new TextField();
+        titleDiv.getChildren().addAll(titleLabel, titleField);
 
-        pastePage.getChildren().add(hello);
+        Label contentLabel = new Label("Edit your paste by using the textbox below:");
+        contentArea = new TextArea();
+
+        HBox actionButtons = new HBox(8);
+        saveButton = new Button("Save");
+        deleteButton = new Button("Delete");
+        copyTextButton = new Button("Copy Text");
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        Label linkLabel = new Label("Get Link: ");
+        linkButton = new Button();
+
+        linkLogo = new ImageView(assetImage("128_link.png"));
+        linkLogo.setPreserveRatio(true);
+        linkLogo.setFitHeight(28);
+        linkButton.setGraphic(linkLogo);
+
+        actionButtons.getChildren().addAll(saveButton, deleteButton, copyTextButton, spacer, linkLabel, linkButton);
+
+        pastePage.getChildren().addAll(titleDiv, contentLabel, contentArea, actionButtons);
 
         return pastePage;
     }
 
     public static void openPaste(String title, String content){
-        hello.setText(title + content);
+        titleField.setText(title);
+        contentArea.setText(content);
+
+        saveButton.setOnAction(e -> {
+            if(editMode){
+                OmniEngine.editPaste(editIndex, titleField.getText(), contentArea.getText());
+                editMode = false; editIndex = -1;
+            }
+            else OmniEngine.addPaste(titleField.getText(), contentArea.getText());
+            openHomePage();
+        });
+        deleteButton.setDisable(false);
+        deleteButton.setOnAction(e -> {
+            if(editMode){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete confirmation");
+                alert.setHeaderText("Delete Paste " + editIndex + "?");
+                alert.setContentText("Are you sure you want to delete this paste?\n"+title+"\n"+content);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    OmniEngine.deletePaste(editIndex);
+                    alert.close();
+                }
+                else {
+                    alert.close();
+                }
+                openHomePage();
+                editMode = false;
+                editIndex = -1;
+            }
+        });
+
         mainLayout.getChildren().clear();
         mainLayout.getChildren().addAll(topBar, pastePage);
     }
+    public static void openPaste(int index){
+        String title = OmniEngine.getPasteTitle(index);
+        String content = OmniEngine.getPasteContent(index);
+        openPaste(title, content);
+    }
     public static void openPaste(){
-        int i = OmniEngine.getPasteList().length;
-        openPaste("Untitled "+(i+1), "");
+        int i = OmniEngine.getPasteList().size();
+        openPaste("UntitledPaste"+(i+1), "");
+        deleteButton.setDisable(true);
     }
 
     public static void openHomePage(){
         mainLayout.getChildren().clear();
-        mainLayout.getChildren().addAll(topBar, mainArea);
+        mainLayout.getChildren().addAll(topBar, mainArea, createPasteButton);
+        editMode = false; editIndex = -1;
         refreshPastes();
     }
 }
