@@ -16,11 +16,12 @@ public class OmniUI {
     }
 
     static Scene mainScene;
-    static VBox mainLayout, mainArea, pasteListDiv;
+    static VBox mainLayout, mainArea, pasteListDiv, pastePage;
     static HBox topBar, navButtons, buttonContents;
     static ScrollPane scrollArea;
-    static Label title, logotext;
+    static Label title, logotext, hello;
     static Button homeButton, aboutButton, contactButton, themeChangeButton, profileButton;
+    static ImageView logo;
 
     public static Scene drawMainScreen(){
         mainLayout = new VBox();
@@ -44,9 +45,13 @@ public class OmniUI {
 
         mainArea.getChildren().addAll(title, scrollArea);
 
+        //paste page setup
+        pastePage = drawPastePage();
+
         mainLayout.getChildren().addAll(topBar, mainArea);
         mainScene = new Scene(mainLayout);
         OmniColors.setTheme();
+
         return mainScene;
     }
 
@@ -58,7 +63,7 @@ public class OmniUI {
         HBox.setHgrow(spacer1, Priority.ALWAYS);
         HBox.setHgrow(spacer2, Priority.ALWAYS);
 
-        ImageView logo = new ImageView();
+        logo = new ImageView();
         logo.setImage(assetImage("512_logo.png"));
         logo.setPreserveRatio(true);
         logo.setFitHeight(48);
@@ -70,7 +75,9 @@ public class OmniUI {
         navButtons.setId("navButtons");
 
         homeButton = new Button("HOME");
+        homeButton.setOnAction(e -> openHomePage());
         aboutButton = new Button("ABOUT");
+        aboutButton.setOnAction(e -> openPaste());
         contactButton = new Button("CONTACT");
         navButtons.getChildren().addAll(homeButton, aboutButton, contactButton);
 
@@ -91,6 +98,12 @@ public class OmniUI {
 
         topbar.getChildren().addAll(logo, logotext, spacer1, navButtons, spacer2, themeChangeButton, profileButton);
         return topbar;
+    }
+
+    private static void refreshPastes(){
+        pasteListDiv.getChildren().clear();
+        pasteListDiv = displayPastes(pasteListDiv);
+        System.out.println("refreshed");
     }
 
     private static VBox displayPastes(VBox div){
@@ -131,8 +144,32 @@ public class OmniUI {
         return div;
     }
 
-    public static Scene drawPasteScreen(){
-        Scene pasteScreen = new Scene(new VBox());
-        return pasteScreen;
+    private static VBox drawPastePage(){
+        pastePage = new VBox(4);
+        pastePage.setId("pastePage");
+        VBox.setVgrow(pastePage, Priority.ALWAYS);
+
+        hello = new Label("HEHHHEHEHEHE");
+        hello.setId("logotect");
+
+        pastePage.getChildren().add(hello);
+
+        return pastePage;
+    }
+
+    public static void openPaste(String title, String content){
+        hello.setText(title + content);
+        mainLayout.getChildren().clear();
+        mainLayout.getChildren().addAll(topBar, pastePage);
+    }
+    public static void openPaste(){
+        int i = OmniEngine.getPasteList().length;
+        openPaste("Untitled "+(i+1), "");
+    }
+
+    public static void openHomePage(){
+        mainLayout.getChildren().clear();
+        mainLayout.getChildren().addAll(topBar, mainArea);
+        refreshPastes();
     }
 }

@@ -16,8 +16,6 @@ public class MainApp extends Application {
         stage.setMinWidth(700);
 
         mainScreen = OmniUI.drawMainScreen();
-        pasteScreen = OmniUI.drawPasteScreen();
-
         stage.setScene(mainScreen);
 
         stage.show();

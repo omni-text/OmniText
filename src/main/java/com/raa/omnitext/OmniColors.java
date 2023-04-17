@@ -15,10 +15,12 @@ public class OmniColors {
     static void switchTheme(){
         if(lightTheme) {
             OmniUI.mainScene.getStylesheets().removeAll("lightmode.css", "app.css");
+            OmniUI.logo.setImage(OmniUI.assetImage("512_logo_darkmode.png"));
             lightTheme = false;
         }
         else {
             OmniUI.mainScene.getStylesheets().removeAll("darkmode.css", "app.css");
+            OmniUI.logo.setImage(OmniUI.assetImage("512_logo.png"));
             lightTheme = true;
         }
         setTheme();
