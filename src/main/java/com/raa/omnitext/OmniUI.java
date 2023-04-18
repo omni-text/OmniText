@@ -231,20 +231,19 @@ public class OmniUI {
             if(editMode){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Delete confirmation");
-                alert.setHeaderText("Delete Paste " + editIndex + "?");
+                alert.setHeaderText("Delete Paste?");
                 alert.setContentText("Are you sure you want to delete this paste?\n"+title+"\n"+content);
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     OmniEngine.deletePaste(editIndex);
                     alert.close();
+                    openHomePage();
+                    editIndex = -1; editMode = false;
                 }
                 else {
                     alert.close();
                 }
-                openHomePage();
-                editMode = false;
-                editIndex = -1;
             }
         });
 

@@ -1,10 +1,11 @@
 package com.raa.omnitext;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OmniEngine {
-    private static ArrayList<String> pasteList = new ArrayList<>();
-    private static ArrayList<String> pasteContentList = new ArrayList<>(){};
+    private static ArrayList<String> pasteList = new ArrayList<>(List.of(new String[]{"Paste1", "Paste2"}));
+    private static ArrayList<String> pasteContentList = new ArrayList<>(List.of(new String[]{"content of paste 1 here", "content of paste 2 here"}));
 
     public static ArrayList<String> getPasteList(){
         return pasteList;
