@@ -19,7 +19,7 @@ public class OmniUI {
     static VBox mainLayout, mainArea, pasteListDiv, pastePage;
     static HBox topBar, navButtons, buttonContents;
     static ScrollPane scrollArea;
-    static Label title, logotext;
+    static Label title, logotext, aa;
     static Button homeButton, aboutButton, contactButton, themeChangeButton, profileButton, createPasteButton;
     static Button saveButton, deleteButton, copyTextButton, linkButton;
     static ImageView logo, linkLogo;
@@ -59,8 +59,16 @@ public class OmniUI {
 //        paste page setup
         pastePage = drawPastePage();
 
-        mainLayout.getChildren().addAll(topBar, mainArea);
-        mainScene = new Scene(mainLayout);
+        aa = new Label();
+        ImageView bottomDesignImage = new ImageView(assetImage("1920_page_end.png"));
+        aa.setId("bottomDesignImage");
+        bottomDesignImage.setPreserveRatio(false);
+        bottomDesignImage.setFitHeight(48);
+        bottomDesignImage.fitWidthProperty().bind(mainArea.widthProperty());
+        aa.setGraphic(bottomDesignImage);
+
+        mainLayout.getChildren().addAll(topBar, mainArea, aa);
+        mainScene = new Scene(mainLayout, 700, 500);
         OmniColors.setTheme();
 
         return mainScene;
@@ -186,21 +194,32 @@ public class OmniUI {
         VBox.setVgrow(pastePage, Priority.ALWAYS);
 
         HBox titleDiv = new HBox(8);
+        titleDiv.setAlignment(Pos.CENTER_LEFT);
         Label titleLabel = new Label("Paste Title: ");
+        titleLabel.setId("pasteTitleLabel");
         titleField = new TextField();
+        titleField.setId("pasteTitleField");
         titleDiv.getChildren().addAll(titleLabel, titleField);
 
         Label contentLabel = new Label("Edit your paste by using the textbox below:");
+        contentLabel.setId("contentLabel");
         contentArea = new TextArea();
+        contentArea.setId("contentArea");
+        VBox.setVgrow(contentArea, Priority.ALWAYS);
 
         HBox actionButtons = new HBox(8);
+        actionButtons.setId("actionButtons");
         saveButton = new Button("Save");
+        saveButton.setId("pasteSaveButton");
         deleteButton = new Button("Delete");
+        deleteButton.setId("pasteDeleteButton");
         copyTextButton = new Button("Copy Text");
+        copyTextButton.setId("copyTextButton");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
         Label linkLabel = new Label("Get Link: ");
         linkButton = new Button();
+        linkButton.setId("linkButton");
 
         linkLogo = new ImageView(assetImage("128_link.png"));
         linkLogo.setPreserveRatio(true);
@@ -263,7 +282,7 @@ public class OmniUI {
 
     public static void openHomePage(){
         mainLayout.getChildren().clear();
-        mainLayout.getChildren().addAll(topBar, mainArea);
+        mainLayout.getChildren().addAll(topBar, mainArea, aa);
         editMode = false; editIndex = -1;
         refreshPastes();
     }

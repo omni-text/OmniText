@@ -88,3 +88,53 @@
 #deleteButton {
     -fx-background-color: -rbg;
 }
+
+#bottomDesignImage {
+    -fx-background-color: -light;
+}
+
+/* paste page */
+#pastePage {
+    -fx-background-color: -light;
+    -fx-padding: 8px;
+    -fx-font-size: 16px;
+}
+
+#pasteTitleLabel, #pasteTitleField, #contentLabel {
+    -fx-font-size: 20px;
+}
+
+#pasteTitleField {
+    -fx-background-radius: 20px;
+    -fx-pref-width: 448px;
+    -fx-background-color: -textbox;
+}
+#contentLabel {
+    -fx-padding: 20px 0px 0px 0px;
+}
+#contentArea .content {
+    -fx-background-color: -textbox;
+    -fx-background-radius: 20px;
+}
+
+#actionButtons {
+    -fx-padding: 8px 0px 0px 8px;
+}
+
+#pasteSaveButton {
+    -fx-background-color: -dark;
+    -fx-text-fill: -light;
+}
+
+#pasteDeleteButton, #copyTextButton, #linkButton {
+    -fx-background-color: -medium;
+}
+
+#pasteSaveButton, #pasteDeleteButton, #copyTextButton, #linkButton {
+    -fx-background-radius: 15px;
+    -fx-border-color: -dark;
+    -fx-border-width: 3px;
+    -fx-border-style: solid;
+    -fx-border-radius: 15px;
+    -fx-font-weight: bold;
+}
