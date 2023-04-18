@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainApp extends Application {
-    Scene mainScreen, pasteScreen;
+    Scene mainScreen;
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("OmniText");
