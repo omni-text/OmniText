@@ -73,6 +73,8 @@
 
 #paste .label {
     -fx-font-size: 24px;
+    -fx-pref-height: 100%;
+    -fx-background-color: red;
 }
 
 #copyLinkButton, #deleteButton {

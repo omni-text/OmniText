@@ -50,16 +50,16 @@ public class OmniUI {
         displayPastes();
         scrollArea.setContent(pasteListDiv);
 
-        mainArea.getChildren().addAll(title, scrollArea);
-
         createPasteButton = new Button("Create New");
         createPasteButton.setId("createPasteButton");
         createPasteButton.setOnAction(e -> openPaste());
 
+        mainArea.getChildren().addAll(title, scrollArea, createPasteButton);
+
 //        paste page setup
         pastePage = drawPastePage();
 
-        mainLayout.getChildren().addAll(topBar, mainArea, createPasteButton);
+        mainLayout.getChildren().addAll(topBar, mainArea);
         mainScene = new Scene(mainLayout);
         OmniColors.setTheme();
 
@@ -149,7 +149,12 @@ public class OmniUI {
             buttonContents.getChildren().addAll(title, spacer, copyLinkButton, deleteButton);
             paste.setGraphic(buttonContents);
             final int k = i;
-            paste.setOnAction(e -> {
+            title.setOnMouseClicked(e -> {
+                openPaste(k);
+                editMode = true;
+                editIndex = k;
+            });
+            spacer.setOnMouseClicked(e -> {
                 openPaste(k);
                 editMode = true;
                 editIndex = k;
@@ -259,7 +264,7 @@ public class OmniUI {
 
     public static void openHomePage(){
         mainLayout.getChildren().clear();
-        mainLayout.getChildren().addAll(topBar, mainArea, createPasteButton);
+        mainLayout.getChildren().addAll(topBar, mainArea);
         editMode = false; editIndex = -1;
         refreshPastes();
     }
