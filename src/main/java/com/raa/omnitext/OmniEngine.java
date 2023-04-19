@@ -40,7 +40,6 @@ public class OmniEngine {
 
         content = content.replace("\n", "\\n").replace("\t", "\\t");
         pasteContentList.add(index, content);
-        System.out.println(title + " " + content);
 
         try {
             writePastesToFile();
