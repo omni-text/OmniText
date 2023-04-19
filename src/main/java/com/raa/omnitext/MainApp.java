@@ -1,6 +1,7 @@
 package com.raa.omnitext;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -19,6 +20,10 @@ public class MainApp extends Application {
         stage.setScene(mainScreen);
 
         stage.show();
+    }
+
+    public static void close(){
+        Platform.exit();
     }
 
     public static void main(String[] args) {

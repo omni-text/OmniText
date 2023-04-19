@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class OmniUI {
+    // get the Image file from the icons folder inside resources
     public static Image assetImage(String filename){
         return new Image(OmniUI.class.getResource("/icons/" + filename).toString());
     }
@@ -26,9 +27,11 @@ public class OmniUI {
     static TextField titleField;
     static TextArea contentArea;
 
+    // indicates if a paste is being edited or is a new one
     static boolean editMode = false;
     static int editIndex = -1;
 
+    // build the Home Screen GUI
     public static Scene drawMainScreen(){
         mainLayout = new VBox();
         mainLayout.setAlignment(Pos.CENTER);
@@ -74,6 +77,7 @@ public class OmniUI {
         return mainScene;
     }
 
+    // build the top bar containing logo, etc
     private static HBox drawTopBar(HBox topbar){
         HBox.setHgrow(topbar, Priority.ALWAYS);
 
@@ -118,12 +122,14 @@ public class OmniUI {
         return topbar;
     }
 
+    // refresh the list of pastes to match the current data
     private static void refreshPastes(){
         pasteListDiv.getChildren().clear();
         displayPastes();
         System.out.println("refreshed");
     }
 
+    // build the gui of the list of pastes
     private static void displayPastes(){
         ArrayList<String> list = OmniEngine.getPasteList();
         ArrayList<String> contentList = OmniEngine.getPasteContentList();
@@ -188,6 +194,7 @@ public class OmniUI {
         }
     }
 
+    // build the paste edit page
     private static VBox drawPastePage(){
         pastePage = new VBox(4);
         pastePage.setId("pastePage");
@@ -233,6 +240,7 @@ public class OmniUI {
         return pastePage;
     }
 
+    // open a specific paste page
     public static void openPaste(String title, String content){
         titleField.setText(title);
         contentArea.setText(content);
@@ -280,6 +288,7 @@ public class OmniUI {
         deleteButton.setDisable(true);
     }
 
+    // open the home page if paste page open
     public static void openHomePage(){
         mainLayout.getChildren().clear();
         mainLayout.getChildren().addAll(topBar, mainArea, aa);
