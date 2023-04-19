@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
@@ -27,6 +29,9 @@ public class OmniUI {
     static ImageView logo, linkLogo, themeIcon, profileIcon;
     static TextField titleField;
     static TextArea contentArea;
+    static Clipboard userClip = Clipboard.getSystemClipboard();
+    static ClipboardContent clipboardContent = new ClipboardContent();
+
 
     // indicates if a paste is being edited or is a new one
     static boolean editMode = false;
@@ -285,6 +290,10 @@ public class OmniUI {
                     alert.close();
                 }
             }
+        });
+        copyTextButton.setOnAction(e -> {
+            clipboardContent.putString(contentArea.getText());
+            userClip.setContent(clipboardContent);
         });
 
         mainLayout.getChildren().clear();
