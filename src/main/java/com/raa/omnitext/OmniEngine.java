@@ -1,12 +1,8 @@
 package com.raa.omnitext;
 
-import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,20 +22,41 @@ public class OmniEngine {
     private static File pasteFile = new File(omniDirectory + "\\pastes.txt");
     private static int tempNum = 1;
 
-    public static void addPaste(String title, String content){
+    public static void addPaste(String title, String content) {
         if(!pasteList.contains(title)) {
             pasteList.add(title);
             pasteContentList.add(content);
+
+            try {
+                writePastesToFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-    public static void editPaste(int index, String title, String content){
+    public static void editPaste(int index, String title, String content) {
         deletePaste(index);
         pasteList.add(index, title);
+
+        content = content.replace("\n", "\\n").replace("\t", "\\t");
         pasteContentList.add(index, content);
+        System.out.println(title + " " + content);
+
+        try {
+            writePastesToFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public static void deletePaste(int index){
+    public static void deletePaste(int index) {
         pasteList.remove(index);
         pasteContentList.remove(index);
+
+        try {
+            writePastesToFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static String getPasteTitle(int index){
@@ -63,6 +80,7 @@ public class OmniEngine {
     }
 
     private static void checkPasteFile() throws IOException {
+        checkOmniDirectory();
         try{
             pasteFile.createNewFile();
         }
@@ -77,7 +95,7 @@ public class OmniEngine {
         }
     }
 
-    private static void getPastesFromFile() throws IOException {
+    public static void getPastesFromFile() throws IOException {
         checkPasteFile();
 
         ArrayList<String> pasteT = new ArrayList<>();
@@ -85,13 +103,30 @@ public class OmniEngine {
 
         try(BufferedReader br = new BufferedReader(new FileReader(pasteFile))) {
             for(String line; (line = br.readLine()) != null; ) {
-                String[] components = line.split("\\t\\t", 2);
-                pasteT.add(components[0]);
-                pasteC.add(components[1]);
+                String[] components = line.split("\t\t", 2);
+                if(components.length == 2) {
+                    pasteT.add(components[0]);
+
+                    components[1] = components[1].replace("\\n", "\n").replace("\\t", "\t");
+                    pasteC.add(components[1]);
+                }
             }
         }
 
         pasteList = pasteT;
         pasteContentList = pasteC;
+    }
+
+    public static void writePastesToFile() throws IOException {
+        checkPasteFile();
+
+        try (BufferedWriter pasteFileWriter = new BufferedWriter(new FileWriter(pasteFile))){
+            for(int i=0; i<pasteList.size(); i++){
+                if(i <= pasteContentList.size()-1) {
+                    String out = pasteList.get(i) + "\t\t" + pasteContentList.get(i);
+                    pasteFileWriter.write(out + "\n");
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -131,6 +132,12 @@ public class OmniUI {
 
     // build the gui of the list of pastes
     private static void displayPastes(){
+        try {
+            OmniEngine.getPastesFromFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         ArrayList<String> list = OmniEngine.getPasteList();
         ArrayList<String> contentList = OmniEngine.getPasteContentList();
         pasteListDiv.setAlignment(Pos.CENTER);
