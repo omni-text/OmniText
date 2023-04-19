@@ -23,8 +23,8 @@ public class OmniUI {
     static ScrollPane scrollArea;
     static Label title, logotext, aa;
     static Button homeButton, aboutButton, contactButton, themeChangeButton, profileButton, createPasteButton;
-    static Button saveButton, deleteButton, copyTextButton, linkButton;
-    static ImageView logo, linkLogo;
+    static Button saveButton, cancelButton, deleteButton, copyTextButton, linkButton;
+    static ImageView logo, linkLogo, themeIcon, profileIcon;
     static TextField titleField;
     static TextArea contentArea;
 
@@ -98,15 +98,15 @@ public class OmniUI {
         navButtons = new HBox(12);
         navButtons.setId("navButtons");
 
-        homeButton = new Button("HOME");
+        homeButton = new Button("Homepage");
         homeButton.setOnAction(e -> openHomePage());
-        aboutButton = new Button("ABOUT");
+        aboutButton = new Button("About OmniText");
         contactButton = new Button("CONTACT");
-        navButtons.getChildren().addAll(homeButton, aboutButton, contactButton);
+        navButtons.getChildren().addAll(homeButton, aboutButton);
 
         themeChangeButton = new Button();
         themeChangeButton.setId("themeChangeButton");
-        ImageView themeIcon = new ImageView(assetImage("128_switch_darkmode.png"));
+        themeIcon = new ImageView(assetImage("128_switch_darkmode.png"));
         themeIcon.setPreserveRatio(true);
         themeIcon.setFitHeight(24);
         themeChangeButton.setGraphic(themeIcon);
@@ -114,12 +114,12 @@ public class OmniUI {
 
         profileButton = new Button();
         profileButton.setId("profileButton");
-        ImageView profileIcon = new ImageView(assetImage("128_profile.png"));
+        profileIcon = new ImageView(assetImage("128_profile.png"));
         profileIcon.setPreserveRatio(true);
         profileIcon.setFitHeight(40);
         profileButton.setGraphic(profileIcon);
 
-        topbar.getChildren().addAll(logo, logotext, spacer1, navButtons, spacer2, themeChangeButton, profileButton);
+        topbar.getChildren().addAll(logo, logotext, spacer1, navButtons, themeChangeButton, spacer2);
         return topbar;
     }
 
@@ -167,7 +167,7 @@ public class OmniUI {
             deletePasteIcon.setFitHeight(28);
             deleteButton.setGraphic(deletePasteIcon);
 
-            buttonContents.getChildren().addAll(title, spacer, copyLinkButton, deleteButton);
+            buttonContents.getChildren().addAll(title, spacer, deleteButton);
             paste.setGraphic(buttonContents);
             final int k = i;
             title.setOnMouseClicked(e -> {
@@ -225,6 +225,8 @@ public class OmniUI {
         actionButtons.setId("actionButtons");
         saveButton = new Button("Save");
         saveButton.setId("pasteSaveButton");
+        cancelButton = new Button("Cancel");
+        cancelButton.setId("linkButton"); // Id of an unused button
         deleteButton = new Button("Delete");
         deleteButton.setId("pasteDeleteButton");
         copyTextButton = new Button("Copy Text");
@@ -240,7 +242,7 @@ public class OmniUI {
         linkLogo.setFitHeight(28);
         linkButton.setGraphic(linkLogo);
 
-        actionButtons.getChildren().addAll(saveButton, deleteButton, copyTextButton, spacer, linkLabel, linkButton);
+        actionButtons.getChildren().addAll(saveButton, cancelButton, deleteButton, copyTextButton, spacer);
 
         pastePage.getChildren().addAll(titleDiv, contentLabel, contentArea, actionButtons);
 
@@ -260,13 +262,17 @@ public class OmniUI {
             else OmniEngine.addPaste(titleField.getText(), contentArea.getText());
             openHomePage();
         });
+        cancelButton.setOnAction(e -> {
+            editMode = false; editIndex = -1;
+            openHomePage();
+        });
         deleteButton.setDisable(false);
         deleteButton.setOnAction(e -> {
             if(editMode){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Delete confirmation");
                 alert.setHeaderText("Delete Paste?");
-                alert.setContentText("Are you sure you want to delete this paste?\n"+title+"\n"+content);
+                alert.setContentText("Are you sure you want to delete this paste?\n"+title+"\n"+content.substring(0, Math.min(content.length(), 120))+"...");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){

@@ -17,12 +17,16 @@ public class OmniColors {
             OmniUI.mainScene.getStylesheets().removeAll("lightmode.css", "app.css");
             OmniUI.logo.setImage(OmniUI.assetImage("512_logo_darkmode.png"));
             OmniUI.linkLogo.setImage(OmniUI.assetImage("128_link_darkmode.png"));
+            OmniUI.themeIcon.setImage(OmniUI.assetImage("128_switch_lightmode.png"));
+            OmniUI.profileIcon.setImage(OmniUI.assetImage("128_profile_darkmode.png"));
             lightTheme = false;
         }
         else {
             OmniUI.mainScene.getStylesheets().removeAll("darkmode.css", "app.css");
             OmniUI.logo.setImage(OmniUI.assetImage("512_logo.png"));
             OmniUI.linkLogo.setImage(OmniUI.assetImage("128_link.png"));
+            OmniUI.themeIcon.setImage(OmniUI.assetImage("128_switch_darkmode.png"));
+            OmniUI.profileIcon.setImage(OmniUI.assetImage("128_profile.png"));
             lightTheme = true;
         }
         setTheme();

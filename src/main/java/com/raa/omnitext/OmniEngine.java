@@ -38,7 +38,6 @@ public class OmniEngine {
         deletePaste(index);
         pasteList.add(index, title);
 
-        content = content.replace("\n", "\\n").replace("\t", "\\t");
         pasteContentList.add(index, content);
 
         try {
@@ -72,7 +71,11 @@ public class OmniEngine {
 
         if(!result){
             if(omniDirectory.isFile()) {
-                while(!omniDirectory.renameTo(new File(homeDirectory + "\\OmniText (" + tempNum + ")"))) tempNum*=4;
+                while(
+                        !omniDirectory.renameTo(
+                                new File(homeDirectory + "\\OmniText (" + tempNum + ")")
+                        )
+                ) tempNum+=Math.random();
                 checkOmniDirectory();
             }
         }
@@ -106,7 +109,7 @@ public class OmniEngine {
                 if(components.length == 2) {
                     pasteT.add(components[0]);
 
-                    components[1] = components[1].replace("\\n", "\n").replace("\\t", "\t");
+                    components[1] = components[1].replace("&&OMNI&N&", "\n").replace("&&OMNI&T&", "\t");
                     pasteC.add(components[1]);
                 }
             }
@@ -114,6 +117,7 @@ public class OmniEngine {
 
         pasteList = pasteT;
         pasteContentList = pasteC;
+        writePastesToFile();
     }
 
     public static void writePastesToFile() throws IOException {
@@ -122,7 +126,8 @@ public class OmniEngine {
         try (BufferedWriter pasteFileWriter = new BufferedWriter(new FileWriter(pasteFile))){
             for(int i=0; i<pasteList.size(); i++){
                 if(i <= pasteContentList.size()-1) {
-                    String out = pasteList.get(i) + "\t\t" + pasteContentList.get(i);
+                    String content = pasteContentList.get(i).replace("\n", "&&OMNI&N&").replace("\t", "&&OMNI&T&");
+                    String out = pasteList.get(i) + "\t\t" + content;
                     pasteFileWriter.write(out + "\n");
                 }
             }

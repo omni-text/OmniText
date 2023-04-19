@@ -17,6 +17,7 @@
 
 #navButtons {
     -fx-alignment: CENTER;
+    -fx-padding: 0px 16px 0px 0px;
 }
 
 #navButtons .button {
@@ -99,6 +100,7 @@
     -fx-font-size: 18px;
     -fx-background-radius: 16px;
     -fx-border-insets: 8px;
+    -fx-font-weight: bold;
 }
 
 /* paste page */
@@ -132,17 +134,26 @@
 #pasteSaveButton {
     -fx-background-color: -dark;
     -fx-text-fill: -light;
+    -fx-border-color: -dark;
 }
 
-#pasteDeleteButton, #copyTextButton, #linkButton {
+#copyTextButton, #linkButton {
     -fx-background-color: -medium;
+    -fx-border-color: -dark;
+}
+
+#pasteDeleteButton {
+    -fx-background-color: -rbg2;
+    -fx-text-fill: -rfg;
+    -fx-border-color: -rfg;
 }
 
 #pasteSaveButton, #pasteDeleteButton, #copyTextButton, #linkButton {
     -fx-background-radius: 15px;
-    -fx-border-color: -dark;
     -fx-border-width: 3px;
     -fx-border-style: solid;
     -fx-border-radius: 15px;
     -fx-font-weight: bold;
+    -fx-padding: 8px 24px;
+    -fx-font-size: 18px;
 }
