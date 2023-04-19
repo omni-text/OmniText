@@ -15,4 +15,8 @@
     -textbox: #ffffff;
     -black: #000000;
     -text: -black;
+
+    -hover-dark: #14791f;
+    -hover-light: #3b9445;
+    -hover-red: #d96262;
 }

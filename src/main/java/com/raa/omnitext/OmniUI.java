@@ -106,6 +106,7 @@ public class OmniUI {
         homeButton = new Button("Homepage");
         homeButton.setOnAction(e -> openHomePage());
         aboutButton = new Button("About OmniText");
+        aboutButton.setOnAction(e -> openAboutUsWindow());
         contactButton = new Button("CONTACT");
         navButtons.getChildren().addAll(homeButton, aboutButton);
 
@@ -132,7 +133,6 @@ public class OmniUI {
     private static void refreshPastes(){
         pasteListDiv.getChildren().clear();
         displayPastes();
-        System.out.println("refreshed");
     }
 
     // build the gui of the list of pastes
@@ -144,8 +144,10 @@ public class OmniUI {
         }
 
         ArrayList<String> list = OmniEngine.getPasteList();
-        ArrayList<String> contentList = OmniEngine.getPasteContentList();
         pasteListDiv.setAlignment(Pos.CENTER);
+
+        if(list.isEmpty()) title.setText("No Pastes Yet");
+        else title.setText("Your Pastes");
 
         for(int i=0; i<list.size(); i++){
             Button paste = new Button();
@@ -255,7 +257,7 @@ public class OmniUI {
     }
 
     // open a specific paste page
-    public static void openPaste(String title, String content){
+    private static void openPaste(String title, String content){
         titleField.setText(title);
         contentArea.setText(content);
 
@@ -299,19 +301,33 @@ public class OmniUI {
         mainLayout.getChildren().clear();
         mainLayout.getChildren().addAll(topBar, pastePage);
     }
-    public static void openPaste(int index){
+    private static void openPaste(int index){
         String title = OmniEngine.getPasteTitle(index);
         String content = OmniEngine.getPasteContent(index);
         openPaste(title, content);
     }
-    public static void openPaste(){
+    private static void openPaste(){
         int i = OmniEngine.getPasteList().size();
         openPaste("UntitledPaste"+(i+1), "");
         deleteButton.setDisable(true);
     }
 
-    // open the home page if paste page open
-    public static void openHomePage(){
+    public static void openAboutUsWindow(){
+        Alert aboutUs = new Alert(Alert.AlertType.INFORMATION);
+        aboutUs.setTitle("About OmniText");
+        aboutUs.setHeaderText("About OmniText");
+        aboutUs.setContentText(
+                "OmniText is a text storage application that " +
+                "lets you store plain text in a single place in " +
+                "the form of 'pastes', basically acting as a permanent clipboard." +
+                "\n\nOmniText has been made using the GUI Toolkit JavaFX " +
+                "and has been hand crafted to near perfection by us."
+        );
+        aboutUs.showAndWait();
+    }
+
+    // open the home page when any other page open
+    private static void openHomePage(){
         mainLayout.getChildren().clear();
         mainLayout.getChildren().addAll(topBar, mainArea, aa);
         editMode = false; editIndex = -1;

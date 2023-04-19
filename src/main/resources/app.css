@@ -22,16 +22,31 @@
 
 #navButtons .button {
     -fx-background-color: -medium;
+    -fx-background-radius: 16px;
     -fx-border-color: transparent;
     -fx-font-weight: bolder;
     -fx-font-size: 20px;
     -fx-text-fill: -lighter;
+    -fx-border-width: 2px;
+    -fx-border-color: -lighter;
+    -fx-border-radius: 16px;
+}
+
+#navButtons .button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+#navButtons .button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
 }
 
 #themeChangeButton {
     -fx-background-color: -dark;
     -fx-background-radius: 50%;
     -fx-padding: 8px;
+}
+#themeChangeButton:hover {
+    -fx-background-color: -hover-dark;
 }
 
 #profileButton {
@@ -65,16 +80,25 @@
 #paste {
     -fx-background-color: -medium;
     -fx-background-radius: 25px;
+    -fx-border-radius: 25px;
     -fx-pref-width: 500;
     -fx-max-width: 500;
     -fx-pref-height: 64;
     -fx-max-height: 64;
     -fx-alignment: CENTER;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+}
+
+#paste:hover{
+    -fx-background-color: -hover-light;
+    -fx-border-width: 2px;
+    -fx-border-color: -text;
 }
 
 #paste .label {
     -fx-font-size: 24px;
-    -fx-pref-height: 48px;
+    -fx-pref-height: 56px;
 }
 
 #copyLinkButton, #deleteButton {
@@ -82,12 +106,16 @@
     -fx-pref-width: 32;
     padding: 12px;
     -fx-background-radius: 16px;
+    -fx-border-radius: 16px;
 }
 #copyLinkButton {
     -fx-background-color: -lighter;
 }
 #deleteButton {
     -fx-background-color: -rbg;
+}
+#deleteButton:hover {
+    -fx-background-color: palevioletred;
 }
 
 #bottomDesignImage {
@@ -101,6 +129,9 @@
     -fx-background-radius: 16px;
     -fx-border-insets: 8px;
     -fx-font-weight: bold;
+}
+#createPasteButton:hover {
+    -fx-background-color: -hover-dark;
 }
 
 /* paste page */
@@ -136,16 +167,25 @@
     -fx-text-fill: -light;
     -fx-border-color: -dark;
 }
+#pasteSaveButton:hover {
+    -fx-background-color: -darker;
+}
 
 #copyTextButton, #linkButton {
     -fx-background-color: -medium;
     -fx-border-color: -dark;
+}
+#copyTextButton:hover, #linkButton:hover {
+    -fx-background-color: -light;
 }
 
 #pasteDeleteButton {
     -fx-background-color: -rbg2;
     -fx-text-fill: -rfg;
     -fx-border-color: -rfg;
+}
+#pasteDeleteButton:hover {
+    -fx-background-color: -hover-red;
 }
 
 #pasteSaveButton, #pasteDeleteButton, #copyTextButton, #linkButton {
