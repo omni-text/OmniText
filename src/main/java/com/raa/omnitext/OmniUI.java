@@ -329,7 +329,7 @@ public class OmniUI {
     }
     private static void openPaste(){
         int i = OmniEngine.getPasteList().size();
-        openPaste("UntitledPaste"+(i+1), "");
+        openPaste("Untitled Paste "+(i+1), "");
         deleteButton.setDisable(true);
     }
 
