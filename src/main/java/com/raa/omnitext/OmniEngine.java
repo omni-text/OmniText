@@ -20,16 +20,9 @@ public class OmniEngine {
     private static String homeDirectory = System.getProperty("user.home");
     private static String userOS = System.getProperty("os.name").toLowerCase();
 
-    private static File omniDirectory = new File(homeDirectory + "\\OmniText");
-    private static File pasteFile = new File(omniDirectory + "\\pastes.txt");
-
-    {
-        if(userOS.contains("mac")){
-            omniDirectory = new File(homeDirectory + "/OmniText");
-            pasteFile = new File(omniDirectory + "/pastes.txt");
-        }
-    }
-
+    private static File omniDirectory = new File(homeDirectory + (userOS.contains("mac") ? "/OmniText" : "\\OmniText"));
+    private static File pasteFile = new File(omniDirectory + (userOS.contains("mac") ? "/pastes.txt" : "\\pastes.txt"));
+    
     private static int tempNum = 1;
 
     public static void addPaste(String title, String content) {
