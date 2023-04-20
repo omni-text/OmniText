@@ -13,7 +13,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws IOException {
         stage.setTitle("OmniText");
         stage.getIcons().add(OmniUI.assetImage("512_logo.png"));
-        stage.setMinHeight(500);
+        stage.setMinHeight(600);
         stage.setMinWidth(700);
 
         mainScreen = OmniUI.drawMainScreen();

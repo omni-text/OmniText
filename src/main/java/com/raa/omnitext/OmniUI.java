@@ -80,7 +80,7 @@ public class OmniUI {
         aa.setGraphic(bottomDesignImage);
 
         mainLayout.getChildren().addAll(topBar, mainArea, aa);
-        mainScene = new Scene(mainLayout, 700, 500);
+        mainScene = new Scene(mainLayout, 700, 600);
         OmniColors.setTheme();
 
         return mainScene;
@@ -106,7 +106,7 @@ public class OmniUI {
         navButtons = new HBox(12);
         navButtons.setId("navButtons");
 
-        homeButton = new Button("Homepage");
+        homeButton = new Button("Your Pastes");
         homeButton.setOnAction(e -> openHomePage());
         aboutButton = new Button("About OmniText");
         aboutButton.setOnAction(e -> openAboutUsWindow());
@@ -229,6 +229,7 @@ public class OmniUI {
         Label contentLabel = new Label("Edit your paste by using the textbox below:");
         contentLabel.setId("contentLabel");
         contentArea = new TextArea();
+//        contentArea.setStyle("-fx-focus-color: red; -fx-faint-focus-color: transparent;");
         contentArea.setId("contentArea");
         VBox.setVgrow(contentArea, Priority.ALWAYS);
 

@@ -153,6 +153,11 @@
 #contentLabel {
     -fx-padding: 20px 0px 0px 0px;
 }
+
+#contentArea {
+    -fx-focus-color: -light;
+    -fx-faint-focus-color: transparent;
+}
 #contentArea .content {
     -fx-background-color: -textbox;
     -fx-background-radius: 20px;
