@@ -1,5 +1,7 @@
 package com.raa.omnitext;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -8,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -190,8 +193,9 @@ public class OmniUI {
             deleteButton.setOnAction(e -> {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Delete confirmation");
-                alert.setHeaderText("Delete Paste?");
-                alert.setContentText("Are you sure you want to delete this paste?\n"+OmniEngine.getPasteTitle(k)+"\n"+OmniEngine.getPasteContent(k));
+                alert.setHeaderText("Delete Paste titled \""+OmniEngine.getPasteTitle(k)+"\"?");
+                String content = OmniEngine.getPasteContent(k);
+                alert.setContentText("Are you sure you want to delete this paste?\n\n"+content.substring(0, Math.min(content.length(), 96))+"...");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
@@ -262,11 +266,22 @@ public class OmniUI {
         contentArea.setText(content);
 
         saveButton.setOnAction(e -> {
+            String titleText = titleField.getText().trim();
+            String contentText = contentArea.getText().trim();
+
+            if(titleText.isEmpty()){
+                Alert err = new Alert(Alert.AlertType.WARNING);
+                err.setTitle("Warning");
+                err.setHeaderText("Invalid Paste Title");
+                err.setContentText("Paste Title must not be empty");
+                err.showAndWait();
+                return;
+            }
             if(editMode){
-                OmniEngine.editPaste(editIndex, titleField.getText(), contentArea.getText());
+                OmniEngine.editPaste(editIndex, titleText, contentText);
                 editMode = false; editIndex = -1;
             }
-            else OmniEngine.addPaste(titleField.getText(), contentArea.getText());
+            else OmniEngine.addPaste(titleText, contentText);
             openHomePage();
         });
         cancelButton.setOnAction(e -> {
@@ -278,8 +293,8 @@ public class OmniUI {
             if(editMode){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Delete confirmation");
-                alert.setHeaderText("Delete Paste?");
-                alert.setContentText("Are you sure you want to delete this paste?\n"+title+"\n"+content.substring(0, Math.min(content.length(), 120))+"...");
+                alert.setHeaderText("Delete Paste titled \""+title+"\"?");
+                alert.setContentText("Are you sure you want to delete this paste?\n\n"+content.substring(0, Math.min(content.length(), 96))+"...");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
@@ -296,6 +311,11 @@ public class OmniUI {
         copyTextButton.setOnAction(e -> {
             clipboardContent.putString(contentArea.getText());
             userClip.setContent(clipboardContent);
+            copyTextButton.setText("Copied!");
+            Timeline tl = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
+                copyTextButton.setText("Copy Text");
+            }));
+            tl.play();
         });
 
         mainLayout.getChildren().clear();
