@@ -23,9 +23,6 @@ What OmniText will do and all the features it will offer
   - when you open a paste, this page will contain the paste details which you can edit
   - will have the copy text and delete button
 
-## App Flowchart
-- NIL
-
 # Design
 What would OmniText look like on different platforms, and the type of visual design it'll have
 
