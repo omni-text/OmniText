@@ -12,7 +12,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle("OmniText");
-        stage.getIcons().add(OmniUI.assetImage("512_logo.png"));
+        stage.getIcons().add(OmniUI.assetImage("window_logo.png"));
         stage.setMinHeight(600);
         stage.setMinWidth(700);
 
